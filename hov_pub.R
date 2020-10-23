@@ -4,27 +4,27 @@ library(tidyverse)
 ### read in the data
 HEADERS <- c("country", "factor", "factor_content", "endowment", "gdp", "trade_balance", "ypc", "pop")
 # note `ypc` refers to `gdp per capita`
-trefler_data <- read_csv("hov_pub.csv", col_names = HEADERS)
+trefler <- read_csv("hov_pub.csv", col_names = HEADERS)
 
 ### creating a country index
 ## selecting max ypc (USA) and creating a ratio relative to this for all countries
-max_ypc <- trefler_data %>%
+max_ypc <- trefler %>%
     select(ypc) %>%
     max()
 
-trefler_data <- trefler_data %>%
+trefler <- trefler %>%
     mutate(ypc_ratio = ypc / max_ypc) %>%
     mutate(ypc_ratio = ifelse(country == "Italy", ypc_ratio + 0.0001, ypc_ratio))
 # includes Italy specific adjustment from original code
 
 ## sorting and indexing
-trefler_data <- trefler_data %>%
+trefler <- trefler %>%
     arrange(ypc_ratio) %>%
     group_by(ypc_ratio) %>% 
     mutate(country_id = cur_group_id())
 
 ### creating a factor index
-trefler_data <- trefler_data %>% 
+trefler <- trefler %>% 
     arrange(factor) %>% 
     group_by(factor) %>% 
     mutate(factor_index = cur_group_id())
@@ -34,7 +34,7 @@ deltas <- cbind(c("Bangladesh", "Pakistan", "Indonesia", "Sri Lanka", "Thailand"
 colnames(deltas) <- c("country", "delta")
 deltas <- as_tibble(deltas)
 
-trefler_data <- inner_join(trefler_data, deltas, by = "country")
+trefler <- inner_join(trefler, deltas, by = "country")
 
 ### save output
-write_csv(trefler_data, "trefler_data.csv")
+write_csv(trefler, "trefler.csv")
