@@ -13,17 +13,14 @@ max_ypc <- trefler_data %>%
     max()
 
 trefler_data <- trefler_data %>%
-    mutate(ypc_ratio = ypc /max_ypc)
-
-# adjustment for Italy - from original code -- issue is this drops all the other countries!!
-trefler_data <- trefler_data %>%
-    filter(country == "Italy", .preserve = TRUE) %>%
-    mutate(ypc_ratio = ypc_ratio + 0.0001)
+    mutate(ypc_ratio = ypc / max_ypc) %>%
+    mutate(ypc_ratio = ifelse(country == "Italy", ypc_ratio + 0.0001, ypc_ratio))
+# includes Italy specific adjustment from original code
 
 # sorting and indexing
-trefler_data <- trefler_data %>%
-    group_by(ypc_ratio) %>%
-    mutate(country_id = row_number())
+#trefler_data <- trefler_data %>%
+#    group_by(ypc_ratio) %>%
+#    mutate(country_id = row_number())
 
 ## creating a factor index
 
