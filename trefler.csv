@@ -1,4 +1,4 @@
-country,factor,factor_content,endowment,gdp,trade_balance,ypc,pop,ypc_ratio,country_id,factor_index,delta
+country,factor,factor_content,endowment,gdp,trade_balance,ypc,pop,ypc_ratio,country_id,factor_id,delta
 Bangladesh,capital,-1890890891,16848373042,14281500000,-1541100288,638,95210000,0.043984832816270254,1,1,0.03
 Pakistan,capital,-3198334507,69414736958,31649452800,-2266232320,1217,90427008,0.0839021027231989,2,1,0.09
 Indonesia,capital,-4839604060,371000000000,90818720000,1108000768,1598,156584000,0.11016890727335402,3,1,0.1
